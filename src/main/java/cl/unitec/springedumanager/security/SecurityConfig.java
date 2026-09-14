@@ -38,9 +38,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // Deshabilitado temporalmente para permitir POST desde nuestros formularios simples
             .authorizeHttpRequests(auth -> auth
-                // Solo los usuarios con rol ADMIN pueden hacer POST (guardar) en cursos
+            	.requestMatchers("/api/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/cursos/guardar").hasRole("ADMIN")
-                // Cualquier petición necesita que el usuario haya iniciado sesión
                 .anyRequest().authenticated() 
             )
             .formLogin(form -> form
