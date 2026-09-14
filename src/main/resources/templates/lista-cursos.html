@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Cursos</title>
+</head>
+<body>
+    <h1>Lista de Cursos</h1>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre del Curso</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="curso : ${cursos}">
+                <td th:text="${curso.id}"></td>
+                <td th:text="${curso.nombre}"></td>
+                <td th:text="${curso.descripcion}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Registrar Nuevo Curso</h2>
+    <form th:action="@{/cursos/guardar}" th:object="${nuevoCurso}" method="post">
+        Nombre del Curso: <input type="text" th:field="*{nombre}" required /><br><br>
+        Descripción: <input type="text" th:field="*{descripcion}" required /><br><br>
+        <button type="submit">Guardar Curso</button>
+    </form>
+
+    <br>
+    <a href="/estudiantes">Ir a la gestión de Estudiantes</a>
+</body>
+</html>
