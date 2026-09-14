@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Estudiante {
@@ -16,6 +19,13 @@ public class Estudiante {
     private String apellido;
     private String email;
 
+    @ManyToMany
+    @JoinTable(
+        name = "inscripciones",
+        joinColumns = @JoinColumn(name = "estudiante_id"),
+        inverseJoinColumns = @JoinColumn(name = "curso_id")
+    )
+    private java.util.List<Curso> cursos;
     // Constructores vacíos son requeridos por JPA
     public Estudiante() {
     }
@@ -56,6 +66,14 @@ public class Estudiante {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public java.util.List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(java.util.List<Curso> cursos) {
+		this.cursos = cursos;
 	}
 
    

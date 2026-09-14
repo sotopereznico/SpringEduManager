@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Curso {
@@ -23,6 +24,8 @@ public class Curso {
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
+    @ManyToMany(mappedBy = "cursos")
+    private java.util.List<Estudiante> estudiantes;
 
 	public Long getId() {
 		return id;
@@ -46,6 +49,14 @@ public class Curso {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public java.util.List<Estudiante> getEstudiantes() {
+		return estudiantes;
+	}
+
+	public void setEstudiantes(java.util.List<Estudiante> estudiantes) {
+		this.estudiantes = estudiantes;
 	}
 
 
