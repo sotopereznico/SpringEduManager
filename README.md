@@ -30,10 +30,15 @@
 
    cd springedumanager
    
+
+## Ejecución
+1. Importa como Existing Maven Project.
+2. Maven → Update Project.
+3. Ejecuta `SpringEduManagerApplication` con Play.
+
 ## Acceder a la aplicación en el navegador web:
 
 http://localhost:8080/login
-
 ##  Credenciales de Acceso (Demo)
 
 El sistema viene preconfigurado con dos usuarios para probar los diferentes niveles de acceso:
