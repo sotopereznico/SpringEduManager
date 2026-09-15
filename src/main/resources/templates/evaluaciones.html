@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Evaluaciones - SpringEduManager</title>
+<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+	<nav class="navbar">
+		<h2>SpringEduManager</h2>
+		<div>
+			<a href="/estudiantes">Estudiantes</a> <a href="/cursos">Cursos</a> <a
+				href="/evaluaciones" class="active">Evaluaciones</a> <a
+				href="/api/estudiantes/integracion">Integración</a>
+			<form th:action="@{/logout}" method="post" class="form-logout">
+				<button type="submit" class="btn-danger btn-logout">Salir</button>
+			</form>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="header-actions">
+			<h1>Evaluaciones</h1>
+		</div>
+
+		<div class="table-container">
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Título</th>
+						<th>Nota</th>
+						<th>Estudiante</th>
+						<th>Curso</th>
+						<th sec:authorize="hasRole('ADMIN')">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="evaluacion : ${evaluaciones}">
+						<td th:text="${evaluacion.id}"></td>
+						<td th:text="${evaluacion.titulo}"></td>
+						<td th:text="${evaluacion.nota}"></td>
+						<td
+							th:text="${evaluacion.estudiante != null ? evaluacion.estudiante.nombre : 'Sin asignar'}"></td>
+						<td
+							th:text="${evaluacion.curso != null ? evaluacion.curso.nombre : 'Sin asignar'}"></td>
+						<td sec:authorize="hasRole('ADMIN')">
+							<form th:action="@{/evaluaciones/eliminar}" method="post"
+								onsubmit="return confirm('¿Eliminar esta evaluación?');">
+								<input type="hidden" name="id" th:value="${evaluacion.id}" />
+								<button type="submit" class="btn-danger btn-sm">Eliminar</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div sec:authorize="hasRole('ADMIN')" class="admin-form-section">
+			<h2>Registrar Nueva Evaluación</h2>
+			<form th:action="@{/evaluaciones/guardar}"
+				th:object="${nuevaEvaluacion}" method="post" class="form-inline">
+				<input type="text" th:field="*{titulo}"
+					placeholder="Título (Ej. Prueba 1)" required /> <input
+					type="number" step="0.1" th:field="*{nota}" placeholder="Nota"
+					required class="input-nota" /> <select th:field="*{curso.id}"
+					required>
+					<option value="" disabled selected>Seleccione Curso</option>
+					<option th:each="curso : ${cursosTotales}" th:value="${curso.id}"
+						th:text="${curso.nombre}"></option>
+				</select> <select th:field="*{estudiante.id}" required>
+					<option value="" disabled selected>Seleccione Estudiante</option>
+					<option th:each="est : ${estudiantesTotales}" th:value="${est.id}"
+						th:text="${est.nombre + ' ' + est.apellido}"></option>
+				</select>
+
+				<button type="submit" class="btn-primary">Guardar</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

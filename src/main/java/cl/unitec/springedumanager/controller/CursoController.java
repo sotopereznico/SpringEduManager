@@ -28,4 +28,9 @@ public class CursoController {
         cursoService.guardarCurso(curso);
         return "redirect:/cursos";
     }
+    @PostMapping("/cursos/eliminar")
+    public String eliminarCurso(@org.springframework.web.bind.annotation.RequestParam Long id) {
+        cursoService.eliminarCurso(id);
+        return "redirect:/cursos";
+    }
 }

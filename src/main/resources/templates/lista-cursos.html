@@ -1,37 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Gestión de Cursos</title>
+<meta charset="UTF-8">
+<title>Cursos - SpringEduManager</title>
+<link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
-    <h1>Lista de Cursos</h1>
-    
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre del Curso</th>
-                <th>Descripción</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="curso : ${cursos}">
-                <td th:text="${curso.id}"></td>
-                <td th:text="${curso.nombre}"></td>
-                <td th:text="${curso.descripcion}"></td>
-            </tr>
-        </tbody>
-    </table>
+	<nav class="navbar">
+		<h2>SpringEduManager</h2>
+		<div>
+			<a href="/estudiantes">Estudiantes</a> <a href="/cursos"
+				class="active">Cursos</a> <a href="/evaluaciones">Evaluaciones</a> <a
+				href="/api/estudiantes/integracion">Integración</a>
+			<form th:action="@{/logout}" method="post" class="form-logout">
+				<button type="submit" class="btn-danger btn-logout">Salir</button>
+			</form>
+		</div>
+	</nav>
 
-    <h2>Registrar Nuevo Curso</h2>
-    <form th:action="@{/cursos/guardar}" th:object="${nuevoCurso}" method="post">
-        Nombre del Curso: <input type="text" th:field="*{nombre}" required /><br><br>
-        Descripción: <input type="text" th:field="*{descripcion}" required /><br><br>
-        <button type="submit">Guardar Curso</button>
-    </form>
+	<div class="container">
+		<div class="header-actions">
+			<h1>Catálogo de Cursos</h1>
+		</div>
 
-    <br>
-    <a href="/estudiantes">Ir a la gestión de Estudiantes</a>
+		<div class="table-container">
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nombre del Curso</th>
+						<th>Descripción</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="curso : ${cursos}">
+						<td th:text="${curso.id}"></td>
+						<td th:text="${curso.nombre}"></td>
+						<td th:text="${curso.descripcion}"></td>
+						<td sec:authorize="hasRole('ADMIN')">
+							<form th:action="@{/cursos/eliminar}" method="post"
+								onsubmit="return confirm('¿Seguro que deseas eliminar este curso?');">
+								<input type="hidden" name="id" th:value="${curso.id}" />
+								<button type="submit" class="btn-danger btn-sm">Eliminar</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div sec:authorize="hasRole('ADMIN')" class="admin-form-section">
+			<h2>Crear Nuevo Curso</h2>
+			<form th:action="@{/cursos/guardar}" th:object="${nuevoCurso}"
+				method="post" class="form-inline">
+				<input type="text" th:field="*{nombre}"
+					placeholder="Nombre del curso" required /> <input type="text"
+					th:field="*{descripcion}" placeholder="Descripción" required />
+				<button type="submit" class="btn-primary">Guardar Curso</button>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

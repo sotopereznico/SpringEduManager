@@ -1,0 +1,282 @@
+@import
+	url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap')
+	;
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #f8f9fa;
+	margin: 0;
+}
+
+
+/* Barra de Navegación */
+.navbar {
+	background-color: #212529;
+	padding: 1rem 2rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: white;
+}
+
+.navbar a {
+	color: #cbd5e1;
+	text-decoration: none;
+	margin-left: 1.5rem;
+	font-weight: 500;
+}
+
+.navbar a:hover, .navbar a.active {
+	color: white;
+}
+
+/* Contenedores y Tarjetas */
+.container {
+	max-width: 1000px;
+	margin: 2rem auto;
+	background: white;
+	padding: 2rem;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Tablas */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 1.5rem;
+}
+
+th, td {
+	padding: 12px;
+	border-bottom: 1px solid #e2e8f0;
+	text-align: left;
+}
+
+th {
+	color: #475569;
+	font-weight: 600;
+}
+
+/* Botones */
+.btn-primary {
+	background-color: #0d6efd;
+	color: white;
+	border: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.btn-danger {
+	background-color: transparent;
+	color: #dc3545;
+	border: 1px solid #dc3545;
+	padding: 6px 12px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.btn-danger:hover {
+	background-color: #dc3545;
+	color: white;
+}
+
+/* Formularios en línea */
+.form-inline {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin-top: 8px;
+}
+
+select, input {
+	padding: 6px;
+	border: 1px solid #cbd5e1;
+	border-radius: 4px;
+}
+
+.navbar h2 {
+	margin: 0;
+}
+
+/* Botón de salir (Logout) en la barra superior */
+.form-logout {
+	display: inline;
+}
+
+.btn-logout {
+	margin-left: 1.5rem;
+	border-color: white;
+	color: white;
+}
+
+.btn-logout:hover {
+	background-color: white;
+	color: #dc3545; /* Letra roja al pasar el mouse */
+}
+
+/* Encabezados con botón a la derecha */
+.header-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+/* Etiquetas (Badges) para los códigos de los cursos */
+.badge-curso {
+	background-color: #475569;
+	color: white;
+	padding: 2px 6px;
+	border-radius: 4px;
+	font-size: 0.8em;
+	font-weight: 600;
+	margin-right: 5px;
+}
+
+/* Botones más pequeños para las tablas */
+.btn-sm {
+	padding: 4px 8px;
+	font-size: 0.9em;
+}
+
+/* Separación para el formulario dentro de la tabla */
+.form-inscripcion {
+	margin-top: 8px;
+}
+/* Separación superior para las secciones exclusivas del administrador */
+.admin-form-section {
+    margin-top: 2rem;
+}
+
+/* Estilo específico para el campo numérico de la nota */
+.input-nota {
+    width: 100px;
+    padding: 6px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+}
+/* =========================================
+   Clases para la pantalla de Login
+   ========================================= */
+
+/* Contenedor que centra la caja en la pantalla */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Caja blanca del login */
+.login-box {
+    background: white;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Títulos y textos del login */
+.login-title {
+    color: #333;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+.login-subtitle {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+/* Ajuste para los inputs y el botón dentro de la caja */
+.login-box input {
+    margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Alertas de error y éxito */
+.alert-error {
+    color: #dc3545;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.alert-success {
+    color: #198754;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+/* =========================================
+   Clases para la pantalla de Login
+   ========================================= */
+
+/* Contenedor que centra la caja en la pantalla */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Caja blanca del login */
+.login-box {
+    background: white;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Títulos y textos del login */
+.login-title {
+    color: #333;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+.login-subtitle {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+/* Ajuste para los inputs y el botón dentro de la caja */
+.login-box input {
+    margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Alertas de error y éxito */
+.alert-error {
+    color: #dc3545;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.alert-success {
+    color: #198754;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+/* Ajuste para enlaces que actúan como botones */
+a.btn-primary {
+    text-decoration: none;
+    display: inline-block;
+}

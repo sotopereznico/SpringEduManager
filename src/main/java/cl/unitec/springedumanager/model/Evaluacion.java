@@ -6,36 +6,38 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDate;
 
 @Entity
 public class Evaluacion {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    private String titulo;
-    private Double nota;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String titulo;
+	private Double nota;
+	private LocalDate fecha;
+	private Integer ponderacion;
 
-    // Relación: Muchas evaluaciones pertenecen a un estudiante
-    @ManyToOne
-    @JoinColumn(name = "estudiante_id")
-    private Estudiante estudiante;
+	// Relación: Muchas evaluaciones pertenecen a un estudiante
+	@ManyToOne
+	@JoinColumn(name = "estudiante_id")
+	private Estudiante estudiante;
 
-    // Relación: Muchas evaluaciones pertenecen a un curso
-    @ManyToOne
-    @JoinColumn(name = "curso_id")
-    private Curso curso;
+	// Relación: Muchas evaluaciones pertenecen a un curso
+	@ManyToOne
+	@JoinColumn(name = "curso_id")
+	private Curso curso;
 
-    public Evaluacion() {
-    }
+	public Evaluacion() {
+	}
 
-    public Evaluacion(String titulo, Double nota, Estudiante estudiante, Curso curso) {
-        this.titulo = titulo;
-        this.nota = nota;
-        this.estudiante = estudiante;
-        this.curso = curso;
-    }
+	public Evaluacion(String titulo, Double nota, Estudiante estudiante, Curso curso) {
+		this.titulo = titulo;
+		this.nota = nota;
+		this.estudiante = estudiante;
+		this.curso = curso;
+	}
 
 	public Long getId() {
 		return id;
@@ -77,5 +79,21 @@ public class Evaluacion {
 		this.curso = curso;
 	}
 
-    // --- HAZ CLIC DERECHO AQUÍ -> Source -> Generate Getters and Setters... ---
+	public LocalDate getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+
+	public Integer getPonderacion() {
+		return ponderacion;
+	}
+
+	public void setPonderacion(Integer ponderacion) {
+		this.ponderacion = ponderacion;
+	}
+
+	
 }

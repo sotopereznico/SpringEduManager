@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import java.util.List;
 
 @Entity
 public class Curso {
@@ -12,7 +13,7 @@ public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+    private String codigo;
     private String nombre;
     private String descripcion;
 
@@ -57,6 +58,14 @@ public class Curso {
 
 	public void setEstudiantes(java.util.List<Estudiante> estudiantes) {
 		this.estudiantes = estudiantes;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 

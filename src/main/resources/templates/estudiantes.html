@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Estudiantes - SpringEduManager</title>
+<!-- Vinculamos nuestro CSS centralizado -->
+<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+	<!-- Barra de Navegación -->
+	<nav class="navbar">
+		<h2>SpringEduManager</h2>
+		<div>
+			<a href="/estudiantes" class="active">Estudiantes</a> <a
+				href="/cursos">Cursos</a> <a href="/evaluaciones">Evaluaciones</a> <a
+				href="/api/estudiantes/integracion">Integración</a>
+
+			<!-- Formulario de Logout limpio -->
+			<form th:action="@{/logout}" method="post" class="form-logout">
+				<button type="submit" class="btn-danger btn-logout">Salir</button>
+			</form>
+		</div>
+	</nav>
+
+	<!-- Contenido Principal -->
+	<div class="container">
+
+		<!-- Encabezado con clase centralizada -->
+		<div class="header-actions">
+			<h1>Estudiantes</h1>
+			<a sec:authorize="hasRole('ADMIN')" href="#formulario-nuevo"
+				class="btn-primary">Nuevo</a>
+		</div>
+
+		<div class="table-container">
+			<table>
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Email</th>
+						<th>Cursos Inscritos</th>
+						<th sec:authorize="hasRole('ADMIN')">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="estudiante : ${estudiantes}">
+						<td th:text="${estudiante.nombre} + ' ' + ${estudiante.apellido}"></td>
+						<td th:text="${estudiante.email}"></td>
+						<td>
+							<!-- Badges limpios -->
+							<div th:each="c : ${estudiante.cursos}">
+								<span class="badge-curso" th:text="'CURSO'"></span> <span
+									th:text="${c.nombre}"></span>
+							</div> <!-- Formulario de inscripción limpio -->
+							<form sec:authorize="hasRole('ADMIN')"
+								th:action="@{/estudiantes/inscribir}" method="post"
+								class="form-inline form-inscripcion">
+								<input type="hidden" name="estudianteId"
+									th:value="${estudiante.id}" /> <select name="cursoId">
+									<option th:each="curso : ${cursosTotales}"
+										th:value="${curso.id}" th:text="${curso.nombre}"></option>
+								</select>
+								<button type="submit" class="btn-primary btn-sm">Inscribir</button>
+							</form>
+						</td>
+						<td sec:authorize="hasRole('ADMIN')">
+							<form th:action="@{/estudiantes/eliminar}" method="post"
+								onsubmit="return confirm('¿Estás seguro de que deseas eliminar este estudiante? Esta acción no se puede deshacer.');">
+								<input type="hidden" name="id" th:value="${estudiante.id}" />
+								<button type="submit" class="btn-danger btn-sm">Eliminar</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="formulario-nuevo" sec:authorize="hasRole('ADMIN')"
+				class="admin-form-section">
+				<h2>Registrar Nuevo Estudiante</h2>
+				<form th:action="@{/estudiantes/guardar}"
+					th:object="${nuevoEstudiante}" method="post" class="form-inline">
+					<input type="text" th:field="*{nombre}" placeholder="Nombre"
+						required /> <input type="text" th:field="*{apellido}"
+						placeholder="Apellido" required /> <input type="email"
+						th:field="*{email}" placeholder="Correo" required />
+					<button type="submit" class="btn-primary">Guardar
+						Estudiante</button>
+				</form>
+			</div>
+</body>
+</html>

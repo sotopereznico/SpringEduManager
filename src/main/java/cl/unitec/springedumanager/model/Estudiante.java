@@ -1,12 +1,14 @@
 package cl.unitec.springedumanager.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.JoinColumn;
+import java.util.List;
 
 @Entity
 public class Estudiante {
@@ -14,19 +16,18 @@ public class Estudiante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
     private String nombre;
     private String apellido;
     private String email;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "inscripciones",
         joinColumns = @JoinColumn(name = "estudiante_id"),
         inverseJoinColumns = @JoinColumn(name = "curso_id")
     )
     private java.util.List<Curso> cursos;
-    // Constructores vacíos son requeridos por JPA
+
     public Estudiante() {
     }
 

@@ -14,17 +14,15 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // 1. Configuración de Usuarios en memoria
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
-        // Usuario normal
-        UserDetails usuario = User.withUsername("user")
-            .password("{noop}user123") // {noop} indica que la contraseña no está encriptada (solo para pruebas)
+        // Usuarios idénticos a los del documento del profesor
+        UserDetails usuario = User.withUsername("alumno@clase.cl")
+            .password("{noop}1234")
             .roles("USER")
             .build();
         
-        // Usuario administrador
-        UserDetails administrador = User.withUsername("admin")
+        UserDetails administrador = User.withUsername("admin@clase.cl")
             .password("{noop}admin123")
             .roles("ADMIN", "USER")
             .build();
@@ -32,20 +30,27 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(usuario, administrador);
     }
 
-    // 2. Configuración de Rutas y Permisos
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Deshabilitado temporalmente para permitir POST desde nuestros formularios simples
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-            	.requestMatchers("/api/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/cursos/guardar").hasRole("ADMIN")
-                .anyRequest().authenticated() 
+                .requestMatchers("/css/**").permitAll() // 1. CSS libre para todos
+                .requestMatchers("/api/**").permitAll() // 2. APIs libres
+                .requestMatchers(HttpMethod.POST, "/cursos/guardar").hasRole("ADMIN") // Solo Admin
+                .requestMatchers(HttpMethod.POST, "/evaluaciones/guardar").hasRole("ADMIN") // Solo Admin
+                .requestMatchers(HttpMethod.POST, "/estudiantes/eliminar", "/cursos/eliminar", "/evaluaciones/eliminar").hasRole("ADMIN")
+                .anyRequest().authenticated() // 3. Todo lo demás requiere login
             )
             .formLogin(form -> form
-            	    .permitAll()
-            	    .defaultSuccessUrl("/estudiantes", true))
-            .logout(logout -> logout.permitAll());
+                .loginPage("/login") // Le decimos a Spring que use NUESTRA pantalla de login
+                .permitAll()
+                .defaultSuccessUrl("/estudiantes", true)
+            )
+            .logout(logout -> logout
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+            );
         
         return http.build();
     }

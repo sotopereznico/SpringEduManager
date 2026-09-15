@@ -19,4 +19,7 @@ public class CursoService {
     public List<Curso> obtenerTodos() {
         return cursoRepository.findAll();
     }
+    public void eliminarCurso(Long id) {
+        cursoRepository.deleteById(id);
+    }
 }

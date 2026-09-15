@@ -3,40 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Estudiantes</title>
+    <!-- Vinculamos nuestro archivo CSS unificado -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-    <h1>Lista de Estudiantes</h1>
-    
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Aquí Thymeleaf repite esta fila por cada estudiante en la base de datos -->
-            <tr th:each="estudiante : ${estudiantes}">
-                <td th:text="${estudiante.id}"></td>
-                <td th:text="${estudiante.nombre}"></td>
-                <td th:text="${estudiante.apellido}"></td>
-                <td th:text="${estudiante.email}"></td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Barra de Navegación -->
+    <nav class="navbar">
+        <h2>SpringEduManager</h2>
+        <ul class="nav-links">
+            <li><a href="/estudiantes">Estudiantes</a></li>
+            <li><a href="/cursos">Cursos</a></li>
+            <li><a href="/logout">Salir</a></li>
+        </ul>
+    </nav>
 
-    <h2>Registrar Nuevo Estudiante</h2>
-    <!-- Formulario vinculado al objeto de Java -->
-    <form th:action="@{/estudiantes/guardar}" th:object="${nuevoEstudiante}" method="post">
-        Nombre: <input type="text" th:field="*{nombre}" required /><br><br>
-        Apellido: <input type="text" th:field="*{apellido}" required /><br><br>
-        Email: <input type="email" th:field="*{email}" required /><br><br>
-        <button type="submit">Guardar Estudiante</button>
-    </form>
-    
-    <br>
-    <a href="/cursos">Ir a la gestión de Cursos</a>
+    <!-- Contenedor de contenido -->
+    <div class="container">
+        <h1>Directorio de Estudiantes</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="estudiante : ${estudiantes}">
+                    <td th:text="${estudiante.id}"></td>
+                    <td th:text="${estudiante.nombre}"></td>
+                    <td th:text="${estudiante.apellido}"></td>
+                    <td th:text="${estudiante.email}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Registrar Nuevo Estudiante</h2>
+        <form th:action="@{/estudiantes/guardar}" th:object="${nuevoEstudiante}" method="post">
+            <label>Nombre:</label>
+            <input type="text" th:field="*{nombre}" required />
+            <label>Apellido:</label>
+            <input type="text" th:field="*{apellido}" required />
+            <label>Email:</label>
+            <input type="email" th:field="*{email}" required />
+            <button type="submit">Guardar Estudiante</button>
+        </form>
+    </div>
 </body>
 </html>
