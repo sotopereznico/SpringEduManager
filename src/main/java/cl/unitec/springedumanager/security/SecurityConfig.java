@@ -16,7 +16,7 @@ public class SecurityConfig {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
-        // Usuarios idénticos a los del documento del profesor
+
         UserDetails usuario = User.withUsername("alumno@clase.cl")
             .password("{noop}1234")
             .roles("USER")
@@ -35,15 +35,15 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/css/**").permitAll() // 1. CSS libre para todos
-                .requestMatchers("/api/**").permitAll() // 2. APIs libres
-                .requestMatchers(HttpMethod.POST, "/cursos/guardar").hasRole("ADMIN") // Solo Admin
-                .requestMatchers(HttpMethod.POST, "/evaluaciones/guardar").hasRole("ADMIN") // Solo Admin
+                .requestMatchers("/css/**").permitAll() 
+                .requestMatchers("/api/**").permitAll() 
+                .requestMatchers(HttpMethod.POST, "/cursos/guardar").hasRole("ADMIN") 
+                .requestMatchers(HttpMethod.POST, "/evaluaciones/guardar").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/estudiantes/eliminar", "/cursos/eliminar", "/evaluaciones/eliminar").hasRole("ADMIN")
-                .anyRequest().authenticated() // 3. Todo lo demás requiere login
+                .anyRequest().authenticated() 
             )
             .formLogin(form -> form
-                .loginPage("/login") // Le decimos a Spring que use NUESTRA pantalla de login
+                .loginPage("/login")
                 .permitAll()
                 .defaultSuccessUrl("/estudiantes", true)
             )

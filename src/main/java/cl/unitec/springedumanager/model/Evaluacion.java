@@ -19,12 +19,12 @@ public class Evaluacion {
 	private LocalDate fecha;
 	private Integer ponderacion;
 
-	// Relación: Muchas evaluaciones pertenecen a un estudiante
+
 	@ManyToOne
 	@JoinColumn(name = "estudiante_id")
 	private Estudiante estudiante;
 
-	// Relación: Muchas evaluaciones pertenecen a un curso
+
 	@ManyToOne
 	@JoinColumn(name = "curso_id")
 	private Curso curso;

@@ -275,7 +275,6 @@ select, input {
     margin-bottom: 1rem;
     font-weight: bold;
 }
-/* Ajuste para enlaces que actúan como botones */
 a.btn-primary {
     text-decoration: none;
     display: inline-block;

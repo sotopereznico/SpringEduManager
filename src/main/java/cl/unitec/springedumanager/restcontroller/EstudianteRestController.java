@@ -18,7 +18,6 @@ public class EstudianteRestController {
     @Autowired
     private EstudianteService estudianteService;
 
-    // Endpoint para obtener todos los estudiantes en formato JSON
     @GetMapping
     public java.util.List<cl.unitec.springedumanager.dto.EstudianteDTO> listarTodos() {
         return estudianteService.obtenerTodosDTO();
@@ -27,13 +26,11 @@ public class EstudianteRestController {
     @Autowired
     private cl.unitec.springedumanager.integration.CampusIntegrationService integracionService;
 
-    // Endpoint para guardar un estudiante enviando un JSON
     @PostMapping
     public void guardar(@RequestBody Estudiante estudiante) {
         estudianteService.guardarEstudiante(estudiante);
     }
     
- // Endpoint para probar la interoperabilidad con RestTemplate
     @GetMapping("/integracion")
     public java.util.List<cl.unitec.springedumanager.dto.EstudianteDTO> probarInteroperabilidad() {
         return integracionService.obtenerEstudiantesDesdeCampus();

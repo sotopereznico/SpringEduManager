@@ -17,7 +17,7 @@ public class Curso {
     private String nombre;
     private String descripcion;
 
-    // Constructor vacío para JPA
+
     public Curso() {
     }
 

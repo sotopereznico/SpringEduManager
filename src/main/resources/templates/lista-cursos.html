@@ -23,7 +23,8 @@
 		<div class="header-actions">
 			<h1>Catálogo de Cursos</h1>
 		</div>
-
+		<div th:if="${error}" class="alert-error" th:text="${error}"></div>
+		<div th:if="${success}" class="alert-success" th:text="${success}"></div>
 		<div class="table-container">
 			<table>
 				<thead>

@@ -29,8 +29,14 @@ public class CursoController {
         return "redirect:/cursos";
     }
     @PostMapping("/cursos/eliminar")
-    public String eliminarCurso(@org.springframework.web.bind.annotation.RequestParam Long id) {
-        cursoService.eliminarCurso(id);
+    public String eliminarCurso(@org.springframework.web.bind.annotation.RequestParam Long id, 
+                                org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttrs) {
+        try {
+            cursoService.eliminarCurso(id);
+            redirectAttrs.addFlashAttribute("success", "Curso eliminado correctamente.");
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("error", "No se puede eliminar: El curso tiene alumnos inscritos o evaluaciones. Vacíe el curso primero.");
+        }
         return "redirect:/cursos";
     }
 }

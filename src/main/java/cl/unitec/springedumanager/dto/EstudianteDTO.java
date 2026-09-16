@@ -47,5 +47,5 @@ public class EstudianteDTO {
 		this.email = email;
 	}
 
-    // --- GENERA LOS GETTERS Y SETTERS AQUÍ ---
+   
 }

@@ -4,11 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Estudiantes - SpringEduManager</title>
-<!-- Vinculamos nuestro CSS centralizado -->
 <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
-	<!-- Barra de Navegación -->
+
 	<nav class="navbar">
 		<h2>SpringEduManager</h2>
 		<div>
@@ -16,21 +15,20 @@
 				href="/cursos">Cursos</a> <a href="/evaluaciones">Evaluaciones</a> <a
 				href="/api/estudiantes/integracion">Integración</a>
 
-			<!-- Formulario de Logout limpio -->
 			<form th:action="@{/logout}" method="post" class="form-logout">
 				<button type="submit" class="btn-danger btn-logout">Salir</button>
 			</form>
 		</div>
 	</nav>
 
-	<!-- Contenido Principal -->
 	<div class="container">
-
-		<!-- Encabezado con clase centralizada -->
 		<div class="header-actions">
 			<h1>Estudiantes</h1>
 			<a sec:authorize="hasRole('ADMIN')" href="#formulario-nuevo"
 				class="btn-primary">Nuevo</a>
+		</div>
+		<div th:if="${error}" class="alert-error" th:text="${error}"></div>
+        <div th:if="${success}" class="alert-success" th:text="${success}"></div>
 		</div>
 
 		<div class="table-container">
@@ -43,16 +41,16 @@
 						<th sec:authorize="hasRole('ADMIN')">Acciones</th>
 					</tr>
 				</thead>
+				
 				<tbody>
 					<tr th:each="estudiante : ${estudiantes}">
 						<td th:text="${estudiante.nombre} + ' ' + ${estudiante.apellido}"></td>
 						<td th:text="${estudiante.email}"></td>
 						<td>
-							<!-- Badges limpios -->
 							<div th:each="c : ${estudiante.cursos}">
 								<span class="badge-curso" th:text="'CURSO'"></span> <span
 									th:text="${c.nombre}"></span>
-							</div> <!-- Formulario de inscripción limpio -->
+							</div> 
 							<form sec:authorize="hasRole('ADMIN')"
 								th:action="@{/estudiantes/inscribir}" method="post"
 								class="form-inline form-inscripcion">

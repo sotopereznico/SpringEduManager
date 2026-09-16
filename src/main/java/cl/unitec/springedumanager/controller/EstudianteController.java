@@ -19,14 +19,14 @@ public class EstudianteController {
     @Autowired
     private cl.unitec.springedumanager.service.CursoService cursoService;
 
-    // Mostrar la página con la lista y el formulario
+
     @GetMapping("/estudiantes")
     public String listarEstudiantes(org.springframework.ui.Model model) {
         model.addAttribute("estudiantes", estudianteService.obtenerTodos());
-        // Enviamos todos los cursos para el menú desplegable
+
         model.addAttribute("cursosTotales", cursoService.obtenerTodos()); 
         model.addAttribute("nuevoEstudiante", new Estudiante());
-        return "estudiantes"; // Ojo: renombramos la vista a "estudiantes"
+        return "estudiantes"; 
     }
 
     @PostMapping("/estudiantes/guardar")
@@ -35,16 +35,36 @@ public class EstudianteController {
         return "redirect:/estudiantes";
     }
 
-    // Nuevo método para procesar la inscripción de un alumno a un curso
+
     @PostMapping("/estudiantes/inscribir")
     public String inscribir(@org.springframework.web.bind.annotation.RequestParam Long estudianteId, 
-                            @org.springframework.web.bind.annotation.RequestParam Long cursoId) {
-        estudianteService.inscribirCurso(estudianteId, cursoId);
+                            @org.springframework.web.bind.annotation.RequestParam(required = false) Long cursoId,
+                            org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttrs) {
+
+        if (cursoId == null) {
+            redirectAttrs.addFlashAttribute("error", "No se puede inscribir: No hay cursos disponibles o no seleccionaste ninguno. Crea un curso primero.");
+            return "redirect:/estudiantes";
+        }
+        
+        try {
+            estudianteService.inscribirCurso(estudianteId, cursoId);
+            redirectAttrs.addFlashAttribute("success", "Estudiante inscrito en el curso exitosamente.");
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("error", "Ocurrió un error al intentar inscribir al estudiante.");
+        }
+        
         return "redirect:/estudiantes";
     }
+    
     @PostMapping("/estudiantes/eliminar")
-    public String eliminarEstudiante(@org.springframework.web.bind.annotation.RequestParam Long id) {
-        estudianteService.eliminarEstudiante(id);
+    public String eliminarEstudiante(@org.springframework.web.bind.annotation.RequestParam Long id, 
+                                     org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttrs) {
+        try {
+            estudianteService.eliminarEstudiante(id);
+            redirectAttrs.addFlashAttribute("success", "Estudiante eliminado correctamente.");
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("error", "No se puede eliminar: El estudiante tiene evaluaciones o cursos asociados. Elimine sus registros primero.");
+        }
         return "redirect:/estudiantes";
     }
 }

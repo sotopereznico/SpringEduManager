@@ -13,12 +13,10 @@ public class EvaluacionService {
     @Autowired
     private EvaluacionRepository evaluacionRepository;
 
-    // Método para obtener todas las evaluaciones de la base de datos
     public List<Evaluacion> obtenerTodas() {
         return evaluacionRepository.findAll();
     }
 
-    // Método para guardar una nueva evaluación
     public void guardarEvaluacion(Evaluacion evaluacion) {
         evaluacionRepository.save(evaluacion);
     }

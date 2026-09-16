@@ -7,5 +7,5 @@ import cl.unitec.springedumanager.model.Evaluacion;
 
 @Repository
 public interface EvaluacionRepository extends JpaRepository<Evaluacion, Long> {
-    // Al heredar de JpaRepository, Spring Boot ya nos regala los métodos save(), findAll(), etc.
+
 }
